@@ -3,6 +3,7 @@ const upDateShoppingCart = (state, action) => {
     return {
       cartItems: [],
       orderTotal: 0,
+      orderItemsTotal: 0,
     };
   }
   switch (action.type) {
@@ -31,7 +32,10 @@ const upDateOrder = (state, bookId, quantity) => {
   const newItem = upDateCartItem(book, item, quantity);
   return {
     cartItems: upDateCartItems(cartItems, newItem, inxBook),
-    orderTotal: 0,
+    orderTotal: upDateTotalCart(upDateCartItems(cartItems, newItem, inxBook)),
+    orderItemsTotal: upDateItemsTotalCart(
+      upDateCartItems(cartItems, newItem, inxBook)
+    ),
   };
 };
 
@@ -47,30 +51,21 @@ const upDateCartItems = (cartItems, item, idx) => {
 
 const upDateCartItem = (book, item = {}, quantity) => {
   const { id = book.id, title = book.title, count = 0, price = 0 } = item;
+  let curentTotalPrice = price + quantity * book.price;
   return {
     id,
     title,
     count: count + quantity,
-    price: price + quantity * book.price,
+    price: curentTotalPrice,
   };
 };
 
-// const upDateCartItem = (book, item) => {
-//   if (item) {
-//     return {
-//       id: item.id,
-//       title: item.title,
-//       count: item.count + 1,
-//       price: item.price + book.price,
-//     };
-//   } else {
-//     return {
-//       id: book.id,
-//       title: book.title,
-//       count: 1,
-//       price: book.price,
-//     };
-//   }
-// };
+const upDateTotalCart = (cartItems) => {
+  return cartItems.reduce((ac, item) => item.price + ac, 0);
+};
+
+const upDateItemsTotalCart = (cartItems) => {
+  return cartItems.reduce((ac, item) => item.count + ac, 0);
+};
 
 export default upDateShoppingCart;

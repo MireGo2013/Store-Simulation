@@ -39,13 +39,13 @@ const allBooksRemovedFromCartAC = (id) => {
   };
 };
 
-const fetchBooksOld = (bookstoreServise, dispatch) => () => {
-  dispatch(booksRequstedAC());
-  bookstoreServise
-    .getBooks()
-    .then((data) => dispatch(booksLoadedAC(data)))
-    .catch((error) => dispatch(booksErrorAC(error)));
-};
+// const fetchBooksOld = (bookstoreServise, dispatch) => () => {
+//   dispatch(booksRequstedAC());
+//   bookstoreServise
+//     .getBooks()
+//     .then((data) => dispatch(booksLoadedAC(data)))
+//     .catch((error) => dispatch(booksErrorAC(error)));
+// };
 
 const fetchBooks = (bookstoreServise) => () => (dispatch) => {
   dispatch(booksRequstedAC());
